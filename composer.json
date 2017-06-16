@@ -1,12 +1,11 @@
 {
-  "name": "goldeagle/wx-pay-api",
-  "description": "基于微信官方PHP SDK V3修改的API SDK",
-  "minimum-stability": "alpha",
+  "name": "ouranoshong/wx-pay-api",
+  "description": "WxPay library build on office sdk",
   "license": "MIT",
   "authors": [
     {
-      "name": "goldeagle",
-      "email": "1308362@gmail.com"
+      "name": "ouranoshong",
+      "email": "ouranoshong@outlook.com"
     }
   ],
   "require" : {
@@ -14,7 +13,7 @@
   },
   "autoload": {
     "psr-4": {
-      "wxpay\\": "src/"
+      "WXPay\\": "src/"
     }
   }
 }
