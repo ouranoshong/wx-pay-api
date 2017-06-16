@@ -1,8 +1,8 @@
 <?php
-namespace wxpay;
+namespace WXPay;
 
-use wxpay\database\WxPayNotify;
-use wxpay\database\WxPayOrderQuery;
+use WXPay\Entity\WxPayNotify;
+use WXPay\Entity\WxPayOrderQuery;
 
 /**
  * 支付回调对象

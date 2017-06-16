@@ -1,8 +1,8 @@
 <?php
-namespace wxpay;
+namespace WXPay;
 
-use wxpay\database\WxPayOrderQuery;
-use wxpay\database\WxPayReverse;
+use WXPay\Entity\WxPayOrderQuery;
+use WXPay\Entity\WxPayReverse;
 
 /**
  * 刷卡支付实现类
@@ -24,8 +24,10 @@ class MicroPay
     /**
      *
      * 提交刷卡支付，并且确认结果，接口比较慢
-     * @param database\WxPayMicroPay $microPayInput
-     * @throws WxPayException
+     *
+     * @param Entity\WxPayMicroPay $microPayInput
+     *
+     * @throws WXPayException
      * @return bool 返回查询接口的结果
      */
     public function pay($microPayInput)
@@ -38,7 +40,7 @@ class MicroPay
             || !array_key_exists("result_code", $result)
         ) {
             echo "接口调用失败,请确认是否输入是否有误！";
-            throw new WxPayException("接口调用失败！");
+            throw new WXPayException("接口调用失败！");
         }
 
         //签名验证
@@ -71,7 +73,7 @@ class MicroPay
 
         //④、次确认失败，则撤销订单
         if (!$this->cancel($out_trade_no)) {
-            throw new WxPayException("撤销单失败！");
+            throw new WXPayException("撤销单失败！");
         }
 
         return false;

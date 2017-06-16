@@ -1,7 +1,7 @@
 <?php
-namespace wxpay;
+namespace WXPay;
 
-use wxpay\database\WxPayBizPayUrl;
+use WXPay\Entity\WxPayBizPayUrl;
 
 /**
  * 刷卡支付实现类
@@ -14,7 +14,9 @@ class NativePay
 {
     /**
      * 生成扫描支付URL,模式一
-     * @param \wxpay\database\WxPayBizPayUrl $productId
+     *
+     * @param \wxpay\Entity\WxPayBizPayUrl $productId
+     *
      * @return string
      */
     public function getPrePayUrl($productId)
@@ -44,7 +46,9 @@ class NativePay
 
     /**
      * 生成直接支付url，支付url有效期为2小时,模式二
-     * @param database\WxPayUnifiedOrder $input
+     *
+     * @param Entity\WxPayUnifiedOrder $input
+     *
      * @return array
      */
     public function getPayUrl($input)
