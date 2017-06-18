@@ -8,10 +8,15 @@
 
 namespace WXPay\Handler;
 
+use function WXPay\convert_arr_to_xml;
+use function WXPay\convert_xml_to_arr;
+use function WXPay\generate_nonce_str;
 use WXPay\HandlerInterface;
+use function WXPay\post_xml;
 use WXPay\Request\UnifiedOrderRequest;
 use WXPay\RequestInterface;
 use WXPay\ResponseInterface;
+use function WXPay\signature;
 use WXPay\Utils;
 use WXPay\WXPayConfig;
 
@@ -43,7 +48,7 @@ class UnifiedOrderHandler implements HandlerInterface
 
             $request->setAppId($config->appId);
             $request->setMchId($config->mchId);
-            $request->setNonceStr(Utils::getNonceStr());
+            $request->setNonceStr(generate_nonce_str());
 
             if(!isset($request->getParams()['trade_type'])) {
                 $request->setTradeType('JSAPI');
@@ -54,11 +59,13 @@ class UnifiedOrderHandler implements HandlerInterface
             }
 
             $requestData = array_filter($request->getParams());
-            $sign = Utils::signature($requestData, $config->key);
+            $sign = signature($requestData, $config->key);
             $requestData['sign'] = $sign;
-            $xmlData = Utils::toXml($requestData);
-            $result= Utils::postXmlCurl($xmlData, $url);
-            return Utils::initResponseFromXml($result, $response);
+            $xmlData = convert_arr_to_xml($requestData);
+            $result= post_xml($xmlData, $url);
+            $response->setResult(convert_xml_to_arr($result));
+
+            return $response;
         }
 
         return $url;

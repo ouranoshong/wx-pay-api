@@ -21,15 +21,19 @@ class WXPayClient
      */
     private $_handler = null;
 
-    public function setConfiguration(WXPayConfig $config) {
+
+    public function setConfiguration(WXPayConfig $config)
+    {
         $this->_configuration = $config;
     }
 
-    public function setHandlerName($name) {
+    public function setHandlerName($name)
+    {
         $this->_handler = $name;
     }
 
-    public function handle(RequestInterface $request, ResponseInterface $response) {
+    public function handle(RequestInterface $request, ResponseInterface $response)
+    {
 
         if (in_array(HandlerInterface::class, array_keys((new \ReflectionClass($this->_handler))->getInterfaces()))) {
 

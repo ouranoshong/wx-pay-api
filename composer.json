@@ -1,6 +1,7 @@
 {
   "name": "ouranoshong/wx-pay-api",
-  "description": "WxPay library build on office sdk",
+  "description": "WXPay library build on office sdk",
+  "keywords": ["wx pay v3", "sdk"],
   "license": "MIT",
   "authors": [
     {
@@ -14,6 +15,7 @@
   "autoload": {
     "psr-4": {
       "WXPay\\": "src/"
-    }
+    },
+    "files": ["src/bootstrap.php"]
   }
 }
