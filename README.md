@@ -6,8 +6,10 @@ more detail see [wx office document](https://pay.weixin.qq.com/wiki/doc/api/jsap
 
 ## Usage
 
+#### Installation
+
 ```shell
-composer require <package/name>
+$ composer require ouranoshong/wx-pay-api
 ```
 
 #### UnifiedOrderPay Api
