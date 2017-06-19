@@ -47,6 +47,15 @@ class UnifiedOrderResponse implements ResponseInterface
     }
 
     /**
+     * @return mixed
+     * @name 小程序id
+     * @var string
+     */
+    public function getAppId() {
+        return $this->result['appid'];
+    }
+
+    /**
      * @var int
      * @name 商户号
      * @return int
