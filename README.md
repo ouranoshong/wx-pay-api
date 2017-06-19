@@ -65,7 +65,7 @@ $nofiy->getXXX();
 
 ```
 
-#### Reply Entify
+#### Reply Entity
 ```php
 // reply success message to wx server
 echo \WXPay\WXPayReply::createSuccessReply();
