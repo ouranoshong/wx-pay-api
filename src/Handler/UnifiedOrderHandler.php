@@ -62,7 +62,7 @@ class UnifiedOrderHandler implements HandlerInterface
             $sign = signature($requestData, $config->key);
             $requestData['sign'] = $sign;
             $xmlData = convert_arr_to_xml($requestData);
-            $result= post_xml($xmlData, $url);
+            $result= post_xml($url, $xmlData);
             $response->setResult(convert_xml_to_arr($result));
 
             return $response;
