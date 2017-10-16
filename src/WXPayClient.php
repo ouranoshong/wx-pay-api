@@ -32,6 +32,10 @@ class WXPayClient
         $this->_handler = $name;
     }
 
+    public function isDebug() {
+        return $this->_configuration->debug;
+    }
+
     public function handle(RequestInterface $request, ResponseInterface $response)
     {
 
