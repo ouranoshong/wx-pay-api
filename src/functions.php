@@ -156,3 +156,56 @@ function convert_xml_to_arr($xml)
     libxml_disable_entity_loader(true);
     return json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
 }
+
+
+/**
+ * 以post方式提交xml到对应的接口url
+ *
+ * @param string $xml 需要post的xml数据
+ * @param string $url url
+ * @param array $options
+ * @return string
+ * @throws WXPayException
+ * @
+ *
+ */
+function post_xml_cert($url, $xml, $options = [])
+{
+    $ch = curl_init();
+    //设置超时
+    curl_setopt($ch, CURLOPT_TIMEOUT, isset($options['second']) ? $options['second'] : 30);
+
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);//严格校验
+    //设置header
+    curl_setopt($ch, CURLOPT_HEADER, TRUE);
+    //要求结果为字符串且输出到屏幕上
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+    if (isset($options['pem'])) {
+        curl_setopt($ch, CURLOPT_SSLCERTTYPE, 'PEM');
+        curl_setopt($ch, CURLOPT_SSLCERT, $options['pem']);
+    }
+
+    if (isset($options['key'])) {
+        curl_setopt($ch, CURLOPT_SSLKEYTYPE, 'PEM');
+        curl_setopt($ch, CURLOPT_SSLKEY, $options['key']);
+    }
+
+    //post提交方式
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
+    //运行curl
+    $data = curl_exec($ch);
+
+    //返回结果
+    if ($data) {
+        curl_close($ch);
+        return $data;
+    } else {
+        $error = curl_errno($ch);
+        curl_close($ch);
+        throw new WXPayException("curl出错，错误码:$error");
+    }
+}

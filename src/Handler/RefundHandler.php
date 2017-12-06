@@ -2,25 +2,25 @@
 /**
  * Created by PhpStorm.
  * User: hong
- * Date: 6/16/17
- * Time: 2:32 PM
+ * Date: 12/6/17
+ * Time: 10:38 AM
  */
 
 namespace WXPay\Handler;
+
 
 use function WXPay\convert_arr_to_xml;
 use function WXPay\convert_xml_to_arr;
 use function WXPay\generate_nonce_str;
 use WXPay\HandlerInterface;
-use function WXPay\post_xml;
-use WXPay\Request\UnifiedOrderRequest;
+use function WXPay\post_xml_cert;
+use WXPay\Request\RefundRequest;
 use WXPay\RequestInterface;
 use WXPay\ResponseInterface;
 use function WXPay\signature;
-use WXPay\Utils;
 use WXPay\WXPayConfig;
 
-class UnifiedOrderHandler implements HandlerInterface
+class RefundHandler implements HandlerInterface
 {
     /**
      * @var \WXPay\WXPayConfig
@@ -36,35 +36,34 @@ class UnifiedOrderHandler implements HandlerInterface
      * @param \WXPay\RequestInterface  $request
      * @param \WXPay\ResponseInterface $response
      *
-     * @return mixed
+     * @return \WXPay\ResponseInterface
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response)
     {
         $config = $this->config;
+        $options = [];
+        $url = $config->url .'/'. $request->apiMethod();
 
-        $url = $config->url . '/'. $request->apiMethod();
-
-        if ($request instanceof UnifiedOrderRequest) {
-
-            $request->setAppId($config->appId);
+        if ($request instanceof RefundRequest) {
             $request->setMchId($config->mchId);
+            $request->setAppId($config->appId);
             $request->setNonceStr(generate_nonce_str());
-
-            if(!isset($request->getParams()['trade_type'])) {
-                $request->setTradeType('JSAPI');
-            }
-
-            if (!isset($request->getParams()['notify_url'])) {
-                $request->setNotifyUrl($config->notifyUrl);
-            }
 
             $requestData = array_filter($request->getParams());
             $sign = signature($requestData, $config->key);
             $requestData['sign'] = $sign;
-            $xmlData = convert_arr_to_xml($requestData);
-            $result= post_xml($url, $xmlData);
-            $response->setResult(convert_xml_to_arr($result));
 
+            if ($config->sslPemPath) {
+                $options['pem'] = $config->sslPemPath;
+            }
+
+            if ($config->sslKeyPath) {
+                $options['key'] = $config->sslKeyPath;
+            }
+
+            $xmlData = convert_arr_to_xml($requestData);
+            $result= post_xml_cert($url, $xmlData, $options);
+            $response->setResult(convert_xml_to_arr($result));
         }
 
         return $response;
