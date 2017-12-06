@@ -179,7 +179,7 @@ function post_xml_cert($url, $xml, $options = [])
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);//严格校验
     //设置header
-    curl_setopt($ch, CURLOPT_HEADER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
     //要求结果为字符串且输出到屏幕上
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
