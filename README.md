@@ -6,8 +6,10 @@ more detail see [wx office document](https://pay.weixin.qq.com/wiki/doc/api/jsap
 
 ## Usage
 
+#### Installation
+
 ```shell
-composer require <package/name>
+$ composer require ouranoshong/wx-pay-api
 ```
 
 #### UnifiedOrderPay Api
@@ -48,6 +50,44 @@ $response->getXXX();
 
 ```
 
-#### Notify Listener to listen WXPay notify message
+#### Notify Entity
 
-To be continue..
+```php
+// don't check signature
+$notify = \WXPay\WXPayNotify::createFromXml('<xml>...</xml>');
+
+// check signature
+$notify = \WXPay\WXPayNotify::createFromXml('<xml>...</xml>', 'key');
+
+// get signature from wei xin server push
+$notify->sign;
+
+// get something else
+$nofiy->getXXX();
+
+```
+
+#### Reply Entity
+```php
+// reply success message to wx server
+echo \WXPay\WXPayReply::createSuccessReply();
+
+// reply fail messge to wx server
+echo \WXPay\WXPayReply::createFailReply('fail message');
+
+```
+
+### Functions
+```php
+// sign `$data` with `$key` use md5
+\WXPay\signature($data, $key);
+
+// generate nonce string
+\WXPay\generate_nonce_str($len);
+
+// convert asocc array to xml
+\WXPay\convert_arr_to_xml($arr);
+
+// convert xml to asocc array
+\WXPay\convert_xml_to_arr($xml);
+```

@@ -31,6 +31,7 @@ class WXPayConfig
     public  $key = '在微信公众号中设置的APPKEY';
     public  $appSecret = '微信密钥';
     public  $notifyUrl = '你接收微信异步返回支付消息的网址';
+    public  $debug = false;
 
     public $url = 'https://api.mch.weixin.qq.com';
 
