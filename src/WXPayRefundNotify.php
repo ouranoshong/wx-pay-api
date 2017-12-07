@@ -9,6 +9,8 @@
 namespace WXPay;
 
 
+use function Sodium\crypto_aead_aes256gcm_decrypt;
+
 class WXPayRefundNotify
 {
     private $data = [];
@@ -47,7 +49,7 @@ class WXPayRefundNotify
     public function decode($reqInfo, $key) {
         $reqInfo = base64_decode($reqInfo);
         $key = strtolower(md5($key));
-        return openssl_decrypt($reqInfo, "AES-256-ECB", $key);
+        return openssl_decrypt($reqInfo, "aes-256-ecb", $key, OPENSSL_RAW_DATA);
     }
 
     /**
