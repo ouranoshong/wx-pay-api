@@ -42,6 +42,14 @@ class RefundResponse implements ResponseInterface
     }
 
     /**
+     * @return mixed
+     * @name 业务结果
+     */
+    public function getResultCode() {
+        return $this->result['result_code'];
+    }
+
+    /**
      * @var string
      * @name 错误代码
      */
