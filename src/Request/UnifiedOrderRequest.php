@@ -13,6 +13,11 @@ use WXPay\RequestInterface;
 
 class UnifiedOrderRequest implements RequestInterface
 {
+
+    const TRADE_TYPE_JS_API = 'JSAPI';
+    const TRADE_TYPE_NATIVE = 'NATIVE';
+    const TRADE_TYPE_APP = 'APP';
+
     /**
      * @var
      */
