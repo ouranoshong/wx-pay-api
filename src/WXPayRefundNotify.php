@@ -186,4 +186,20 @@ class WXPayRefundNotify
     public function getRefundRequestSource() {
         return isset($this->data['refund_request_source']) ? $this->data['refund_request_source'] : '';
     }
+
+    /**
+     * @return mixed|string
+     * @name 支付应用id
+     */
+    public function getAppId() {
+        return isset($this->data['appid']) ? $this->data['appid'] : '';
+    }
+
+    /**
+     * @return mixed|string
+     * @name 商户号
+     */
+    public function getMchId() {
+        return isset($this->data['mch_id']) ? $this->data['mch_id'] : '';
+    }
 }
