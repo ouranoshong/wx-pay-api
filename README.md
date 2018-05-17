@@ -1,5 +1,8 @@
 # WXPayAPI
 
+[![Build Status](https://travis-ci.org/ouranoshong/wx-pay-api.svg?branch=master)](https://travis-ci.org/ouranoshong/wx-pay-api)
+
+
 wxpay_v3 api library
 
 more detail see [wx office document](https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1)
