@@ -36,6 +36,13 @@ class WXPayClient
         return $this->_configuration->debug;
     }
 
+    /**
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
+     * @return mixed
+     * @throws WXPayException
+     * @throws \ReflectionException
+     */
     public function handle(RequestInterface $request, ResponseInterface $response)
     {
 

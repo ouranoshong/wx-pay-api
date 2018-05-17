@@ -17,6 +17,10 @@ class WXPayRefundNotify
 
     private $reqInfo;
 
+    /**
+     * @param $xml
+     * @throws WXPayException
+     */
     public function setFromXML($xml) {
         foreach(convert_xml_to_arr($xml) as $key => $value) {
             switch ($key) {
@@ -29,6 +33,12 @@ class WXPayRefundNotify
         }
     }
 
+    /**
+     * @param $xml
+     * @param $key
+     * @return WXPayRefundNotify
+     * @throws WXPayException
+     */
     public static function createFromXML($xml, $key) {
 
         $notify = new self();
