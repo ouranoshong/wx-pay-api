@@ -46,6 +46,8 @@ class WXPayClient
     public function handle(RequestInterface $request, ResponseInterface $response)
     {
 
+        if (!$this->_handler) throw new WXPayException('Please set a handler first!');
+
         if (in_array(HandlerInterface::class, array_keys((new \ReflectionClass($this->_handler))->getInterfaces()))) {
 
             if (!$this->_configuration) throw new WXPayException('Please set a configuration first!');

@@ -33,10 +33,10 @@ class RefundHandler implements HandlerInterface
     }
 
     /**
-     * @param \WXPay\RequestInterface  $request
-     * @param \WXPay\ResponseInterface $response
-     *
-     * @return \WXPay\ResponseInterface
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws \WXPay\WXPayException
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response)
     {

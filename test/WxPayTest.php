@@ -54,11 +54,110 @@ class WxPayTest extends \PHPUnit\Framework\TestCase
     }
 
     public function testConst() {
-        //    const TRADE_TYPE_JS_API = 'JSAPI';
-        //    const TRADE_TYPE_NATIVE = 'NATIVE';
-        //    const TRADE_TYPE_APP = 'APP';
         $this->assertEquals('JSAPI', \WXPay\Request\UnifiedOrderRequest::TRADE_TYPE_JS_API);
         $this->assertEquals('NATIVE', \WXPay\Request\UnifiedOrderRequest::TRADE_TYPE_NATIVE);
         $this->assertEquals('APP', \WXPay\Request\UnifiedOrderRequest::TRADE_TYPE_APP);
     }
+
+    public function testResponse() {
+        $response = new \WXPay\Response\UnifiedOrderResponse();
+
+        $result = [
+            'appid' => 'appId',
+            'sign' => 'sign',
+            'mch_id' => 'mchId',
+            'device_info' => 'deviceInfo',
+            'nonce_str' => 'nonce',
+            'trade_type' => 'tradeType',
+            'code_url' => 'code_url',
+            'prepay_id' => 'PrepayId',
+            'err_code' => 'err_code',
+            'err_code_des' => 'err_code_des',
+            'result_code' => 'result_code',
+            'return_code' => 'return_code',
+            'return_msg' => 'return_msg'
+        ];
+
+        $response->setResult($result);
+
+        $response->getAppId();
+
+        $this->assertEquals('appId', $response->getAppId());
+        $this->assertEquals('sign', $response->getSign());
+        $this->assertEquals('mchId', $response->getMchId());
+
+        $this->assertEquals('deviceInfo', $response->getDeviceInfo());
+        $this->assertEquals('tradeType', $response->getTradeType());
+        $this->assertEquals('nonce', $response->getNonceStr());
+        $this->assertEquals('code_url', $response->getCodeUrl());
+        $this->assertEquals('PrepayId', $response->getPrepayId());
+
+        $this->assertEquals('err_code', $response->getErrCode());
+        $this->assertEquals('err_code_des', $response->getErrCodeDes());
+        $this->assertEquals('result_code', $response->getResultCode());
+        $this->assertEquals('return_code', $response->getReturnCode());
+        $this->assertEquals('return_msg', $response->getReturnMsg());
+
+        $this->assertEquals(serialize($result), serialize($response->getResult()));
+    }
+
+    /**
+     * @throws ReflectionException
+     * @throws \WXPay\WXPayException
+     *
+     * @expectedException \WXPay\WXPayException
+     */
+    public function testWxPayClientWithoutHandler()
+    {
+        $config = new \WXPay\WXPayConfig();
+
+        $client = new \WXPay\WXPayClient();
+
+        $client->setConfiguration($config);
+
+        $client->handle(new \WXPay\Request\UnifiedOrderRequest(), new \WXPay\Response\UnifiedOrderResponse());
+
+    }
+
+    /**
+     * @throws ReflectionException
+     * @throws \WXPay\WXPayException
+     *
+     * @expectedException \WXPay\WXPayException
+     */
+    public function testWxPayClientWithWrongHandler()
+    {
+        $config = new \WXPay\WXPayConfig();
+
+        $client = new \WXPay\WXPayClient();
+
+        $client->setConfiguration($config);
+
+        $client->setHandlerName(FakeHandler::class);
+
+        $client->handle(new \WXPay\Request\UnifiedOrderRequest(), new \WXPay\Response\UnifiedOrderResponse());
+
+    }
+
+
+    /**
+     * @throws ReflectionException
+     * @throws \WXPay\WXPayException
+     *
+     * @expectedException \WXPay\WXPayException
+     */
+    public function testWxPayClientWithoutConfiguration()
+    {
+        $client = new \WXPay\WXPayClient();
+
+        $client->setHandlerName(FakeHandler::class);
+
+        $client->handle(new \WXPay\Request\UnifiedOrderRequest(), new \WXPay\Response\UnifiedOrderResponse());
+
+    }
+}
+
+class FakeHandler
+{
+
 }
