@@ -327,4 +327,12 @@ class WXPayNotify
     public function getTimeEnd() {
         return isset($this->data['time_end']) ? $this->data['time_end'] : '';
     }
+
+    /**
+     * @return int
+     * @name 汇率
+     */
+    public function getRateValue() {
+        return isset($this->data['rate_value']) ? $this->data['rate_value'] : 0;
+    }
 }
