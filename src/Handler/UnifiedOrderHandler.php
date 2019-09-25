@@ -65,6 +65,9 @@ class UnifiedOrderHandler implements HandlerInterface
             $result= post_xml($url, $xmlData);
             $response->setResult(convert_xml_to_arr($result));
 
+            if ($config->payHandler) {
+            	call_user_func($config->payHandler, $xmlData, $result);
+			}
         }
 
         return $response;

@@ -65,4 +65,5 @@ class WXPayConfig
      */
     public  $reporterLevel = 1;
 
+    public $payHandler = '';
 }
